@@ -1,14 +1,19 @@
-// components/FoodCard.jsx
-
 import Link from "next/link";
 import CartButton from "../buttons/CartButton";
+import Image from "next/image";
 
 const FoodCard = ({ food }) => {
   const { id, title, foodImg, price, category } = food;
 
   return (
     <div className='bg-white shadow-md rounded-2xl overflow-hidden'>
-      <img src={foodImg} alt='' className='w-full h-48 object-cover' />
+      <Image
+        src={foodImg}
+        alt={title}
+        className='w-full h-48 object-cover'
+        width={400}
+        height={300}
+      />
 
       <div className='p-4 space-y-2'>
         <h2 className='text-xl font-semibold'>{title}</h2>

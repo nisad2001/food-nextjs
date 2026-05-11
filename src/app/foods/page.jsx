@@ -6,11 +6,18 @@ import InputSearch from "@/Component/InputSearch";
 const getFoods = async (search) => {
   const res = await fetch(
     `https://taxi-kitchen-api.vercel.app/api/v1/foods/random?search=${search}`,
+    { next: { revalidate: 10 } },
   );
   const data = await res.json();
   await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate loading delay
   return data.foods || [];
 };
+
+export const metadata = {
+  title: "All Foods",
+  description: "Delivering delicious food to your doorstep",
+};
+
 const FoodPage = async ({ searchParams }) => {
   const { search = "" } = await searchParams;
   console.log(search);

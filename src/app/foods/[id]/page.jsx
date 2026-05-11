@@ -1,6 +1,33 @@
 // app/foods/[id]/page.jsx
 
 import Image from "next/image";
+import Link from "next/link";
+export function generateStaticParams() {
+  return [{ id: "52896" }, { id: "53046" }, { id: "52847" }];
+}
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const res = await fetch(
+    `https://taxi-kitchen-api.vercel.app/api/v1/foods/${id}`,
+  );
+
+  const { details = {} } = await res.json();
+  return {
+    title: details.title || "Food Details",
+    generator: "Next.js",
+    applicationName: "Next.js",
+    referrer: "origin-when-cross-origin",
+    keywords: ["Next.js", "React", "JavaScript"],
+    authors: [{ name: "Seb" }, { name: "Josh", url: "https://nextjs.org" }],
+    creator: "Jiachi Liu",
+    publisher: "Sebastian Markbåge",
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+  };
+}
 
 const getSingleFood = async (id) => {
   const res = await fetch(
@@ -74,6 +101,12 @@ const Page = async ({ params }) => {
           <div className='mt-6 text-sm text-gray-400'>
             Fresh & delicious food delivered fast 🚀
           </div>
+          <Link
+            href='/foods'
+            className='text-red-800 hover:underline text-2xl font-bold mt-10'
+          >
+            ← Back to Foods
+          </Link>
         </div>
       </div>
     </div>
